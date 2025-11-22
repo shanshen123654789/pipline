@@ -27,7 +27,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 print(f'train_data size: {X_train.shape}, test size:: {X_test.shape}')
 
-### 一、Feature selection
+### 1. Feature selection
 import numpy as np
 import pandas as pd
 from scipy import stats
@@ -101,7 +101,7 @@ for feature in categorical_features:
 
 summary_df = pd.DataFrame(summary)
 
-output_dir = "/home/jiangshan/cre/growth"  # 使用正确的路径
+output_dir = "/home/jiangshan/cre/growth" 
 os.makedirs(output_dir, exist_ok=True)
 
 file_path = os.path.join(output_dir, "feature_summary.xlsx")
@@ -168,7 +168,7 @@ out_path = Path("/home/jiangshan/cre/growth/selection_results.xlsx")
 out_path.parent.mkdir(parents=True, exist_ok=True)
 selection_results.to_excel(out_path, sheet_name="Results", index=False)
 
-print(f"已保存到：{out_path}")
+print(f"Saved to: {out_path}")
 
 selection_results['Importance'] = (
     selection_results['Importance'] / selection_results['Importance'].sum()
@@ -201,7 +201,7 @@ ax2.plot(
     color="red", marker='o', linestyle='-', label="Cumulative R² (Top Features)"
 )
 
-# 黑点和黑线：其余特征
+# Black dots and black lines: Other features
 ax2.plot(
     selection_results['Feature'][n_features:],
     selection_results['R2'][n_features:],
@@ -210,7 +210,7 @@ ax2.plot(
 
 ax2.set_ylabel("Cumulative R²", fontsize=18, fontweight='bold')
 ax2.tick_params(axis='y', labelsize=12, width=1.5)
-ax2.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x:.3f}'))  # 保留三位小数
+ax2.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x:.3f}'))  # Keep 3 decimal places
 
 
 plt.title(f"Feature Contribution and R² Performance (Top {n_features} Features Highlighted)", fontsize=18, fontweight='bold')
@@ -226,12 +226,12 @@ selection_results = pd.DataFrame(columns=['Feature', 'Importance', 'Mean_R2'])
 
 selected_features = []
 kf = KFold(n_splits=5, shuffle=True, random_state=42)
-n_splits = kf.get_n_splits()  # 获取折数
+n_splits = kf.get_n_splits()  # Get the number of folds
 
 fold_columns = [f'Fold_{i+1}_R2' for i in range(n_splits)]
 
 for i in range(len(top_features)):
-    # 当前特征
+    # Current feature
     current_feature = top_features.iloc[i]['Feature']
     selected_features.append(current_feature)
 
@@ -299,8 +299,8 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 
-mpl.rcParams['font.family'] = 'Times New Roman'  # 全局字体
-mpl.rcParams['pdf.fonttype'] = 42  # 使用 TrueType 字体，方便后期在 AI/PS 中编辑文字
+mpl.rcParams['font.family'] = 'Times New Roman'  # Global font
+mpl.rcParams['pdf.fonttype'] = 42  # Use TrueType font for easy editing in AI/PS
 mpl.rcParams['ps.fonttype'] = 42
 
 selection_results['Importance'] = pd.to_numeric(selection_results['Importance'], errors='coerce')
@@ -331,7 +331,7 @@ ax2 = ax1.twinx()
 
 
 ax2.plot(
-    selection_results['Feature'][:n_features + 1],  # 连接红点到黑点的过渡
+    selection_results['Feature'][:n_features + 1],  # Transition from red to black points
     selection_results['Mean_R2'][:n_features + 1],
     color="red", marker='o', linestyle='-', label="Mean R² (Top Features)"
 )
@@ -367,5 +367,3 @@ fig.savefig(pdf_path, format="pdf", dpi=1200, bbox_inches="tight")
 fig.savefig(jpg_path, format="jpg", dpi=600, bbox_inches="tight")
 plt.show()
 plt.close(fig)
-
-
