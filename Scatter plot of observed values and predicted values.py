@@ -1,7 +1,24 @@
 from sklearn import metrics
 import numpy as np
 
-print("📊 Calculating CatBoost model performance metrics for training and testing datasets...")
+# Train directly using the best parameters found
+catboost = CatBoostRegressor(
+    border_count=64,
+    depth=8,
+    iterations=1000,
+    l2_leaf_reg=1,
+    learning_rate=0.01,
+    random_strength=1,
+    random_state=8,
+    verbose=100,  # Display training progress
+    eval_metric='RMSE',
+    loss_function='RMSE'
+)
+
+# Train on the entire training set
+catboost.fit(X_train, y_train)
+
+print("✅ Model training completed!")
 
 # True values
 y_train_true = y_train.values
@@ -522,3 +539,4 @@ plt.savefig('external_validation_purple_theme.pdf', format='pdf', bbox_inches='t
 plt.show()
 
 print("✅ The external validation chart with purple theme has been generated!")
+
