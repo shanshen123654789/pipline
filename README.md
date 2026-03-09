@@ -1,2 +1,3 @@
 # pipline
-Phenotype-Driven Machine Learning Models for Predicting Average Daily Gain  (ADG) in Yorkshire Pigs with SHAP Interpretation
+This code is intended solely for scholars who love machine learning and for learning purposes only.
+
